@@ -1,4 +1,3 @@
-
 说明：[1.1.0版本](https://github.com/zxbu/webdav-aliyundriver/releases/tag/v1.1.0)支持阿里Teambition网盘的webdav协议，后续的2.x版本仅支持阿里云盘，不再维护Teambition网盘版本
 
 - [webdav-aliyundriver](#webdav-aliyundriver)
@@ -102,19 +101,65 @@ TODO
 TODO
 
 ## Linux
-TODO
+
+创建screen，也可在后续步骤中使用nohup运行
+
+```bash
+screen -S aliyun
+```
+
+安装必需的包
+
+```bash
+sudo apt install mvn davfs2
+```
+
+克隆仓库
+
+```bash
+git clone https://github.com/zxbu/webdav-aliyundriver.git
+cd ./webdav-aliyundriver
+```
+
+从最新代码构建
+
+```bash
+mvn clean package -DskipTests
+```
+
+运行生成的Jar包，具体参考[Jar包运行](## Jar包运行)
+
+```bash
+java -jar ./target/webdav-aliyundriver-2.4.0.jar --aliyundrive.refresh-token="your refreshToken" 
+```
+
+按Ctrl + A + D退出当前screen
+
+创建挂载点
+
+```bash
+mkdir /mnt/aliyundrive
+```
+
+挂载webdav，替换8080为你自己的端口
+
+```bash
+mount -t davfs -o noexec http://localhost:8080 /mnt/aliyundrive
+```
+
+输入用户名与密码，挂载完成。
 
 ## Mac
 TODO
 
 # 客户端兼容性
-| 客户端 | 下载 | 上传 | 备注 |
-| :-----| ----: | :----: | :----: |
-| 群辉Cloud Sync | 可用 | 可用 | 使用单向同步非常稳定 | 
-| Rclone | 可用 | 可用 | 推荐，支持各个系统 |
-| Mac原生 | 可用 | 可用 | | 
-| Windows原生 | 可用 | 有点小问题 | 不建议，适配有点问题，上传报错 |
-| RaiDrive | 可用 | 可用 | Windows平台下建议用这个 |
+| 客户端         | 下载 |    上传    |              备注              |
+| :------------- | ---: | :--------: | :----------------------------: |
+| 群辉Cloud Sync | 可用 |    可用    |      使用单向同步非常稳定      |
+| Rclone         | 可用 |    可用    |       推荐，支持各个系统       |
+| Mac原生        | 可用 |    可用    |                                |
+| Windows原生    | 可用 | 有点小问题 | 不建议，适配有点问题，上传报错 |
+| RaiDrive       | 可用 |    可用    |    Windows平台下建议用这个     |
 
 
 # 浏览器获取refreshToken方式
